@@ -1,4 +1,4 @@
-import { FormBuilder } from '../libs/form-builder/Builder'
+import { FormBuilder } from '../libs/form-builder/builder'
 import { InputConfig } from '../libs/form-builder/types'
 
 type Props = {
