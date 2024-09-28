@@ -6,7 +6,7 @@ import { Props as SwitchProps } from '../../components/common/Switch'
 export type ComponentType = 'dropdownInput' | 'checkbox' | 'inputDefault' | 'switch'
 
 export type InputConfig =
-  | { id?: string; className?: string } & (
+  | { id: string; className?: string } & (
       | {
           type: 'checkbox'
           props: CheckboxProps

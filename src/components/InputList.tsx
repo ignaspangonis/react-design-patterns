@@ -4,11 +4,9 @@ import { FaGripVertical } from 'react-icons/fa'
 import { InputConfig } from '../libs/form-builder/types'
 import { componentTypeToLabel } from '../utils/component-type'
 
-type Input = { id: string; config: InputConfig }
-
 type Props = {
-  inputs: Input[]
-  setInputs: (inputs: Input[]) => void
+  inputs: InputConfig[]
+  setInputs: (inputs: InputConfig[]) => void
 }
 
 const InputList = ({ inputs, setInputs }: Props) => {
@@ -43,7 +41,7 @@ const InputList = ({ inputs, setInputs }: Props) => {
                       className="list-component"
                     >
                       <p className="list-text">
-                        {input.config.props.label} | {componentTypeToLabel[input.config.type]}
+                        {input.props.label} | {componentTypeToLabel[input.type]}
                       </p>
                       <FaGripVertical color="#868788" />
                     </div>

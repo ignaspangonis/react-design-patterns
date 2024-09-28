@@ -14,16 +14,18 @@ import { ComponentType, InputConfig } from '../libs/form-builder/types'
 import { componentTypeToLabel } from '../utils/component-type'
 import { COMPONENT_TYPES } from '../libs/form-builder/constants'
 
-const createProps = (type: ComponentType, label: string): InputConfig => {
+const createConfig = (id: string, type: ComponentType, label: string): InputConfig => {
   switch (type) {
     case 'checkbox':
       return {
-        type: 'checkbox',
+        id,
+        type,
         props: { label },
       }
     case 'dropdownInput':
       return {
-        type: 'dropdownInput',
+        id,
+        type,
         props: {
           label,
           values: ['example 1', 'example 2', 'example 3'],
@@ -31,23 +33,22 @@ const createProps = (type: ComponentType, label: string): InputConfig => {
       }
     case 'inputDefault':
       return {
-        type: 'inputDefault',
+        id,
+        type,
         props: {
           label,
         },
       }
     case 'switch':
       return {
-        type: 'switch',
+        id,
+        type,
         props: {
           label,
         },
       }
     default:
-      return {
-        type: 'inputDefault',
-        props: { label: '' },
-      }
+      throw new Error('Unspecified input selected')
   }
 }
 
@@ -55,10 +56,8 @@ type Props = {
   setNewInputs: (inputs: InputConfig[]) => void
 }
 
-type InputConfigWithId = { id: string; config: InputConfig }
-
 const BuilderForm = ({ setNewInputs }: Props) => {
-  const [inputs, setInputs] = useState<InputConfigWithId[]>([])
+  const [inputs, setInputs] = useState<InputConfig[]>([])
 
   const [selectedInput, setSelectedInput] = useState<ComponentType>()
   const [label, setLabel] = useState<string>('')
@@ -68,19 +67,16 @@ const BuilderForm = ({ setNewInputs }: Props) => {
     setSelectedInput(event.target.value as ComponentType)
   }
 
-  const handleInputChange = (newInputs: InputConfigWithId[]) => {
+  const handleInputChange = (newInputs: InputConfig[]) => {
     setInputs(newInputs)
-    setNewInputs(newInputs.map(input => input.config))
+    setNewInputs(newInputs)
   }
 
   const handleAdd = () => {
     if (!selectedInput) return
 
     const id = String(Number(inputs[inputs.length - 1]?.id || 0) + 1)
-    const newInput = {
-      id,
-      config: createProps(selectedInput, label),
-    }
+    const newInput = createConfig(id, selectedInput, label)
 
     const newInputs = [...inputs, newInput]
     handleInputChange(newInputs)
