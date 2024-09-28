@@ -55,31 +55,35 @@ type Props = {
   setNewInputs: (inputs: InputConfig[]) => void
 }
 
-const BuilderForm = ({ setNewInputs }: Props) => {
-  const [inputs, setInputs] = useState<{ id: string; config: InputConfig }[]>([])
+type InputConfigWithId = { id: string; config: InputConfig }
 
-  const [input, setInput] = useState<ComponentType>()
+const BuilderForm = ({ setNewInputs }: Props) => {
+  const [inputs, setInputs] = useState<InputConfigWithId[]>([])
+
+  const [selectedInput, setSelectedInput] = useState<ComponentType>()
   const [label, setLabel] = useState<string>('')
   // const [classname, setClassname] = useState<string>()
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setInput(event.target.value as ComponentType)
+  const handleSelectInput = (event: SelectChangeEvent) => {
+    setSelectedInput(event.target.value as ComponentType)
+  }
+
+  const handleInputChange = (newInputs: InputConfigWithId[]) => {
+    setInputs(newInputs)
+    setNewInputs(newInputs.map(input => input.config))
   }
 
   const handleAdd = () => {
-    if (!input) return
+    if (!selectedInput) return
 
     const id = String(Number(inputs[inputs.length - 1]?.id || 0) + 1)
     const newInput = {
       id,
-      config: createProps(input, label),
+      config: createProps(selectedInput, label),
     }
 
-    setInputs([...inputs, newInput])
-  }
-
-  const submitInputs = () => {
-    setNewInputs(inputs.map(input => input.config))
+    const newInputs = [...inputs, newInput]
+    handleInputChange(newInputs)
   }
 
   return (
@@ -97,9 +101,9 @@ const BuilderForm = ({ setNewInputs }: Props) => {
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            value={input}
+            value={selectedInput}
             label="Select an input"
-            onChange={handleChange}
+            onChange={handleSelectInput}
           >
             {COMPONENT_TYPES.map(type => (
               <MenuItem key={type} value={type}>
@@ -117,12 +121,9 @@ const BuilderForm = ({ setNewInputs }: Props) => {
         /> */}
       </div>
       <Button variant="contained" onClick={handleAdd} fullWidth>
-        Add +
+        Add
       </Button>
-      <InputList inputs={inputs} setInputs={setInputs} />
-      <Button variant="contained" onClick={submitInputs} fullWidth>
-        Submit
-      </Button>
+      <InputList inputs={inputs} setInputs={handleInputChange} />
     </>
   )
 }

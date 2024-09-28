@@ -1,20 +1,8 @@
-import { FormBuilder } from '../libs/form-builder/builder'
-import { InputConfig } from '../libs/form-builder/types'
-
 type Props = {
-  currentInputs: InputConfig[]
+  inputs: React.ReactNode[]
 }
 
-const DynamicForm = ({ currentInputs }: Props) => {
-  const inputs = currentInputs
-    .reduce(
-      (formBuilder, value) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        formBuilder[value.type](value.props as any),
-      new FormBuilder(),
-    )
-    .build()
-
+const DynamicForm = ({ inputs }: Props) => {
   return <form className="form-group">{inputs}</form>
 }
 
