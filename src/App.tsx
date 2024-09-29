@@ -12,9 +12,9 @@ function App() {
 
   const formInputs = inputs
     .reduce(
-      (formBuilder, config) =>
+      (formBuilder, input) =>
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        formBuilder[config.type](config.props as any),
+        formBuilder[input.type](input.props as any),
       new FormBuilder(),
     )
     .build()

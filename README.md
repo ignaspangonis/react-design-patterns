@@ -10,8 +10,8 @@ Implemented with `FormBuilder` class. It allows to dynamically create a list of 
 ```ts
 const formInputs = inputs
   .reduce(
-    (formBuilder, config) =>
-      formBuilder[config.type](config.props),
+    (formBuilder, input) =>
+      formBuilder[input.type](input.props),
     new FormBuilder(),
   )
   .build()
