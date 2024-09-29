@@ -1,5 +1,5 @@
 import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd'
-import { FaGripVertical, FaRecycle } from 'react-icons/fa'
+import { FaGripVertical, FaTrash } from 'react-icons/fa'
 
 import { InputConfig } from '../libs/form-builder/types'
 import { componentTypeToLabel } from '../libs/form-builder/constants'
@@ -49,7 +49,7 @@ const ManageInputs = ({ inputs, setInputs, onRemove }: Props) => {
                         {input.props.label} | {componentTypeToLabel[input.type]}
                       </p>
                       <RoundButton onClick={() => onRemove(input.props.key)}>
-                        <FaRecycle color="#868788" />
+                        <FaTrash color="#868788" />
                       </RoundButton>
                       <FaGripVertical color="#868788" />
                     </div>
