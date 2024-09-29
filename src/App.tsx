@@ -19,11 +19,11 @@ function App() {
 
   return (
     <main className="main">
-      <div className="form-box">
+      <div className="form-container">
         <h2>Build your form</h2>
         <BuilderForm setNewInputs={setInputs} />
       </div>
-      <div className="form-box form-box--left">
+      <div className="form-container">
         <h2>New Form</h2>
         <DynamicForm inputs={formInputs} />
       </div>

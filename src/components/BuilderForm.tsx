@@ -83,7 +83,7 @@ const BuilderForm = ({ setNewInputs }: Props) => {
   }
 
   return (
-    <>
+    <form className="form">
       <div className="form-group">
         <TextField
           id="standard-basic"
@@ -120,7 +120,7 @@ const BuilderForm = ({ setNewInputs }: Props) => {
         Add
       </Button>
       <InputList inputs={inputs} setInputs={handleInputChange} />
-    </>
+    </form>
   )
 }
 
