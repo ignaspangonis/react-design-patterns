@@ -31,7 +31,7 @@ const ManageInputs = ({ inputs, setInputs, onRemove }: Props) => {
 
   return (
     <section className="form-group">
-      {!isEmpty && <h3>Reorder your form</h3>}
+      {!isEmpty && <h3>Reorder and remove the inputs:</h3>}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="inputs" type="list" direction="vertical">
           {provided => (

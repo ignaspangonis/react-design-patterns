@@ -41,7 +41,7 @@ function App() {
           <BuilderForm onChange={setInputs} inputs={inputs} />
         </div>
         <div className="form-container">
-          <h2>New Form</h2>
+          <h2>Output:</h2>
           <form className="form-group">{formInputs}</form>
         </div>
       </main>
