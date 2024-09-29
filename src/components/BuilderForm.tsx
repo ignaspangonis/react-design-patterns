@@ -1,11 +1,12 @@
 import { FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'
 import { useRef, useState } from 'react'
 
-import ReorderList from './ReorderList'
+import ManageInputs from './ManageInputs'
 import { ComponentType, InputConfig } from '../libs/form-builder/types'
 import { COMPONENT_TYPES, componentTypeToLabel } from '../libs/form-builder/constants'
 import { createConfig } from '../libs/form-builder/utils'
 import { RoundButton } from './Button'
+import { generateUUID } from '../libs/utils/uuid'
 
 type Props = {
   inputs: InputConfig[]
@@ -19,11 +20,17 @@ const BuilderForm = ({ inputs, onChange }: Props) => {
 
   const handleAdd = () => {
     if (!selectedType) return
+    if (!label) return
 
-    const key = String(Number(inputs[inputs.length - 1]?.props.key || 0) + 1)
+    const key = generateUUID()
     const newInput = createConfig({ key, type: selectedType, label })
 
     onChange([...inputs, newInput])
+  }
+
+  const handleRemove = (key: string) => {
+    const newInputs = inputs.filter(input => input.props.key !== key)
+    onChange(newInputs)
   }
 
   return (
@@ -56,7 +63,7 @@ const BuilderForm = ({ inputs, onChange }: Props) => {
 
       <RoundButton onClick={handleAdd}>Add</RoundButton>
 
-      <ReorderList inputs={inputs} setInputs={onChange} />
+      <ManageInputs inputs={inputs} setInputs={onChange} onRemove={handleRemove} />
     </form>
   )
 }

@@ -1,15 +1,19 @@
 import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd'
-import { FaGripVertical } from 'react-icons/fa'
+import { FaGripVertical, FaRecycle } from 'react-icons/fa'
 
 import { InputConfig } from '../libs/form-builder/types'
 import { componentTypeToLabel } from '../libs/form-builder/constants'
+import { RoundButton } from './Button'
 
 type Props = {
   inputs: InputConfig[]
   setInputs: (inputs: InputConfig[]) => void
+  onRemove: (key: string) => void
 }
 
-const ReorderList = ({ inputs, setInputs }: Props) => {
+const ManageInputs = ({ inputs, setInputs, onRemove }: Props) => {
+  const isEmpty = inputs.length === 0
+
   function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list)
     const [removed] = result.splice(startIndex, 1)
@@ -26,7 +30,8 @@ const ReorderList = ({ inputs, setInputs }: Props) => {
   }
 
   return (
-    <>
+    <section className="form-group">
+      {!isEmpty && <h3>Reorder your form</h3>}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="inputs" type="list" direction="vertical">
           {provided => (
@@ -38,11 +43,14 @@ const ReorderList = ({ inputs, setInputs }: Props) => {
                       {...providedDrag.dragHandleProps}
                       {...providedDrag.draggableProps}
                       ref={providedDrag.innerRef}
-                      className="list-component"
+                      className="list-item"
                     >
-                      <p className="list-text">
+                      <p className="list-item__text">
                         {input.props.label} | {componentTypeToLabel[input.type]}
                       </p>
+                      <RoundButton onClick={() => onRemove(input.props.key)}>
+                        <FaRecycle color="#868788" />
+                      </RoundButton>
                       <FaGripVertical color="#868788" />
                     </div>
                   )}
@@ -53,8 +61,8 @@ const ReorderList = ({ inputs, setInputs }: Props) => {
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </section>
   )
 }
 
-export default ReorderList
+export default ManageInputs
