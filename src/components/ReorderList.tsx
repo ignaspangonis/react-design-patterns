@@ -2,14 +2,14 @@ import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea
 import { FaGripVertical } from 'react-icons/fa'
 
 import { InputConfig } from '../libs/form-builder/types'
-import { componentTypeToLabel } from '../utils/component-type'
+import { componentTypeToLabel } from '../libs/form-builder/constants'
 
 type Props = {
   inputs: InputConfig[]
   setInputs: (inputs: InputConfig[]) => void
 }
 
-const InputList = ({ inputs, setInputs }: Props) => {
+const ReorderList = ({ inputs, setInputs }: Props) => {
   function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list)
     const [removed] = result.splice(startIndex, 1)
@@ -32,7 +32,7 @@ const InputList = ({ inputs, setInputs }: Props) => {
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps} className="list-container">
               {inputs.map((input, index) => (
-                <Draggable key={input.id} draggableId={input.id} index={index}>
+                <Draggable key={input.props.key} draggableId={input.props.key} index={index}>
                   {providedDrag => (
                     <div
                       {...providedDrag.dragHandleProps}
@@ -57,4 +57,4 @@ const InputList = ({ inputs, setInputs }: Props) => {
   )
 }
 
-export default InputList
+export default ReorderList

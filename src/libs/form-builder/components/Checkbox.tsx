@@ -1,6 +1,7 @@
 import { FormControlLabel, FormGroup } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
-import { CommonProps } from '../../utils/type'
+
+import { CommonProps } from '../types'
 
 export type Props = CommonProps & {
   label: string
@@ -8,11 +9,9 @@ export type Props = CommonProps & {
 
 const CheckboxComponent = ({ label }: Props) => {
   return (
-    <div>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label={label} />
-      </FormGroup>
-    </div>
+    <FormGroup>
+      <FormControlLabel control={<Checkbox />} label={label} />
+    </FormGroup>
   )
 }
 

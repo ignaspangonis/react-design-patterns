@@ -1,16 +1,12 @@
 import TextField from '@mui/material/TextField'
-import { CommonProps } from '../../utils/type'
+import { CommonProps } from '../types'
 
 export type Props = CommonProps & {
   label: string
 }
 
 const InputDefault = ({ label }: Props) => {
-  return (
-    <div>
-      <TextField id="standard-basic" label={label} variant="standard" fullWidth />
-    </div>
-  )
+  return <TextField id="standard-basic" label={label} variant="standard" fullWidth />
 }
 
 export default InputDefault

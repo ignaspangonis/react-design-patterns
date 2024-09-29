@@ -1,89 +1,33 @@
-import Button from '@mui/material/Button'
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-  TextField,
-} from '@mui/material'
-import { useState } from 'react'
+import { FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'
+import { useRef, useState } from 'react'
 
-import InputList from './InputList'
+import ReorderList from './ReorderList'
 import { ComponentType, InputConfig } from '../libs/form-builder/types'
-import { componentTypeToLabel } from '../utils/component-type'
-import { COMPONENT_TYPES } from '../libs/form-builder/constants'
-
-const createConfig = (id: string, type: ComponentType, label: string): InputConfig => {
-  switch (type) {
-    case 'checkbox':
-      return {
-        id,
-        type,
-        props: { label },
-      }
-    case 'dropdownInput':
-      return {
-        id,
-        type,
-        props: {
-          label,
-          values: ['example 1', 'example 2', 'example 3'],
-        },
-      }
-    case 'inputDefault':
-      return {
-        id,
-        type,
-        props: {
-          label,
-        },
-      }
-    case 'switch':
-      return {
-        id,
-        type,
-        props: {
-          label,
-        },
-      }
-    default:
-      throw new Error('Unspecified input selected')
-  }
-}
+import { COMPONENT_TYPES, componentTypeToLabel } from '../libs/form-builder/constants'
+import { createConfig } from '../libs/form-builder/utils'
+import { RoundButton } from './Button'
 
 type Props = {
-  setNewInputs: (inputs: InputConfig[]) => void
+  inputs: InputConfig[]
+  onChange: (inputs: InputConfig[]) => void
 }
 
-const BuilderForm = ({ setNewInputs }: Props) => {
-  const [inputs, setInputs] = useState<InputConfig[]>([])
-
-  const [selectedInput, setSelectedInput] = useState<ComponentType>()
+const BuilderForm = ({ inputs, onChange }: Props) => {
+  const formRef = useRef<HTMLFormElement>(null)
+  const [selectedType, setSelectedType] = useState<ComponentType>(COMPONENT_TYPES[0])
   const [label, setLabel] = useState<string>('')
-  // const [classname, setClassname] = useState<string>()
-
-  const handleSelectInput = (event: SelectChangeEvent) => {
-    setSelectedInput(event.target.value as ComponentType)
-  }
-
-  const handleInputChange = (newInputs: InputConfig[]) => {
-    setInputs(newInputs)
-    setNewInputs(newInputs)
-  }
 
   const handleAdd = () => {
-    if (!selectedInput) return
+    if (!selectedType) return
 
-    const id = String(Number(inputs[inputs.length - 1]?.id || 0) + 1)
-    const newInput = createConfig(id, selectedInput, label)
+    const key = String(Number(inputs[inputs.length - 1]?.props.key || 0) + 1)
+    const newInput = createConfig({ key, type: selectedType, label })
 
-    const newInputs = [...inputs, newInput]
-    handleInputChange(newInputs)
+    onChange([...inputs, newInput])
   }
 
   return (
-    <form className="form">
+    <form className="form" ref={formRef}>
       <div className="form-group">
         <TextField
           id="standard-basic"
@@ -97,9 +41,9 @@ const BuilderForm = ({ setNewInputs }: Props) => {
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            value={selectedInput}
-            label="Select an input"
-            onChange={handleSelectInput}
+            value={selectedType}
+            label="Select an input field"
+            onChange={event => setSelectedType(event.target.value as ComponentType)}
           >
             {COMPONENT_TYPES.map(type => (
               <MenuItem key={type} value={type}>
@@ -108,18 +52,11 @@ const BuilderForm = ({ setNewInputs }: Props) => {
             ))}
           </Select>
         </FormControl>
-        {/* <TextField
-          id="standard-basic"
-          label="Enter the classname"
-          variant="standard"
-          fullWidth
-          onChange={event => setClassname(event.target.value)}
-        /> */}
       </div>
-      <Button variant="contained" onClick={handleAdd} fullWidth>
-        Add
-      </Button>
-      <InputList inputs={inputs} setInputs={handleInputChange} />
+
+      <RoundButton onClick={handleAdd}>Add</RoundButton>
+
+      <ReorderList inputs={inputs} setInputs={onChange} />
     </form>
   )
 }

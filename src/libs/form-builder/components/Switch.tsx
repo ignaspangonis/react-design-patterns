@@ -1,6 +1,6 @@
 import { FormControlLabel } from '@mui/material'
 import Switch from '@mui/material/Switch'
-import { CommonProps } from '../../utils/type'
+import { CommonProps } from '../types'
 
 export type Props = CommonProps &
   CommonProps & {
@@ -8,11 +8,7 @@ export type Props = CommonProps &
   }
 
 const SwitchComponent = (props: Props) => {
-  return (
-    <div>
-      <FormControlLabel control={<Switch />} label={props.label} />
-    </div>
-  )
+  return <FormControlLabel control={<Switch />} label={props.label} />
 }
 
 export default SwitchComponent
