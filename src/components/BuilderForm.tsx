@@ -48,8 +48,7 @@ const BuilderForm = ({ inputs, onChange }: Props) => {
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} fullWidth>
           <InputLabel id="demo-simple-select-standard-label">Select an input</InputLabel>
           <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
+            labelId="input-select-label"
             value={selectedType}
             label="Select an input field"
             onChange={event => setSelectedType(event.target.value as ComponentType)}

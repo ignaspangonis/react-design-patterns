@@ -15,6 +15,7 @@ body {
 
 .header-content {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 2rem;
 
@@ -24,8 +25,8 @@ body {
   margin: 0 auto;
 }
 
-.header-content__last-element {
-  margin-left: auto;
+.header-content__heading {
+  margin-right: auto;
 }
 
 .main {

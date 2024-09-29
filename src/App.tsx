@@ -3,8 +3,9 @@ import './App.css'
 import BuilderForm from './components/BuilderForm'
 import { InputConfig } from './libs/form-builder/types'
 import { FormBuilder } from './libs/form-builder/builder'
-import { MuiButton } from './components/Button'
+import { MuiButton, RoundButton } from './components/Button'
 import OpenInNewTab from './components/OpenInNewTab'
+import Alert from './components/Alert'
 
 function App() {
   const [inputs, setInputs] = useState<InputConfig[]>([])
@@ -26,11 +27,12 @@ function App() {
             <h1>Form Builder</h1>
             <p>Exploration of design patterns in React</p>
           </div>
-          <div className="header-content__last-element">
-            <OpenInNewTab component={MuiButton} url="https://refactoring.guru/design-patterns">
-              Learn design patterns
-            </OpenInNewTab>
-          </div>
+          <OpenInNewTab component={MuiButton} url="https://refactoring.guru/design-patterns">
+            Learn design patterns
+          </OpenInNewTab>
+          <Alert component={RoundButton} text="This is an alert">
+            Random alert
+          </Alert>
         </div>
       </header>
       <main className="main">
