@@ -26,6 +26,7 @@ const BuilderForm = ({ inputs, onChange }: Props) => {
     const newInput = createConfig({ key, type: selectedType, label })
 
     onChange([...inputs, newInput])
+    setLabel('')
   }
 
   const handleRemove = (key: string) => {
@@ -41,6 +42,7 @@ const BuilderForm = ({ inputs, onChange }: Props) => {
           label="Enter the component label"
           variant="standard"
           fullWidth
+          value={label}
           onChange={event => setLabel(event.target.value)}
         />
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} fullWidth>
@@ -61,7 +63,9 @@ const BuilderForm = ({ inputs, onChange }: Props) => {
         </FormControl>
       </div>
 
-      <RoundButton onClick={handleAdd}>Add</RoundButton>
+      <RoundButton onClick={handleAdd} disabled={!label}>
+        Add
+      </RoundButton>
 
       <ManageInputs inputs={inputs} setInputs={onChange} onRemove={handleRemove} />
     </form>

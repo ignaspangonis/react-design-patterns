@@ -5,6 +5,7 @@ export type ButtonProps = {
   children: React.ReactNode
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   'aria-label'?: string
+  disabled?: boolean
 }
 
 export type Button = React.FC<ButtonProps>
