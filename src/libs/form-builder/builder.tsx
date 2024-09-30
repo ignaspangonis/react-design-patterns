@@ -33,6 +33,6 @@ export class FormBuilder {
   }
 
   build(): ReactNode[] {
-    return this.components
+    return [...this.components]
   }
 }
