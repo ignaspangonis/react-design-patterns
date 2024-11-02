@@ -1,24 +1,10 @@
-import { useState } from 'react'
 import './App.css'
-import BuilderForm from './components/BuilderForm'
-import { InputConfig } from './libs/form-builder/types'
-import { FormBuilder } from './libs/form-builder/builder'
 import { MuiButton, RoundButton } from './components/Button'
 import OpenInNewTab from './components/OpenInNewTab'
 import Alert from './components/Alert'
+import Forms from './components/Forms'
 
 function App() {
-  const [inputs, setInputs] = useState<InputConfig[]>([])
-
-  const formInputs = inputs
-    .reduce(
-      (formBuilder, input) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        formBuilder[input.type](input.props as any),
-      new FormBuilder(),
-    )
-    .build()
-
   return (
     <>
       <header className="header">
@@ -36,14 +22,7 @@ function App() {
         </div>
       </header>
       <main className="main">
-        <div className="form-container">
-          <h2>Build your form</h2>
-          <BuilderForm onChange={setInputs} inputs={inputs} />
-        </div>
-        <div className="form-container">
-          <h2>Output:</h2>
-          <form className="form-group">{formInputs}</form>
-        </div>
+        <Forms />
       </main>
     </>
   )
