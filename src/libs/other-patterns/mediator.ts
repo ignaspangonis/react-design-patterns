@@ -35,7 +35,7 @@ class Boeing implements Airplane {
 }
 
 class TrafficTower implements AirTrafficControl {
-  private runways: Runway[] = []
+  private runways: Runway[]
 
   constructor(runways: Runway[]) {
     this.runways = runways
