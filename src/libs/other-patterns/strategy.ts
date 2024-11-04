@@ -15,12 +15,12 @@ class AwsStorage implements Storage {
 
   async upload(attachment: Attachment) {
     sleep(1000)
-    console.log(`Uploading ${attachment.localPath} to AWS S3`)
+    console.log(`Uploaded ${attachment.localPath} to AWS S3`)
   }
 
   async download(attachment: Attachment) {
     sleep(1000)
-    console.log(`Downloading from AWS S3 at ${attachment.localPath}`)
+    console.log(`Downloaded from AWS S3 at ${attachment.localPath}`)
   }
 }
 
@@ -31,12 +31,12 @@ class SftpStorage implements Storage {
 
   async upload(attachment: Attachment) {
     sleep(1000)
-    console.log(`Uploading ${attachment.localPath} to SFTP server`)
+    console.log(`Uploaded ${attachment.localPath} to SFTP server`)
   }
 
   async download(attachment: Attachment) {
     sleep(1000)
-    console.log(`Downloading from SFTP server at ${attachment.localPath}`)
+    console.log(`Downloaded from SFTP server at ${attachment.localPath}`)
   }
 }
 
